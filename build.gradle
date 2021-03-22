@@ -16,7 +16,7 @@ buildscript {
     }
     dependencies {
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
-        classpath "com.github.tntim96:fakesmtp:2.0" // ローカルでダミーのSMTPサーバーを立てる
+        classpath "com.github.tntim96:fakesmtp:2.0"
         classpath "com.avast.gradle:gradle-docker-compose-plugin:${dockerComposePluginVersion}"
         classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:${jibPluginVersion}"
     }
@@ -38,7 +38,7 @@ subprojects {
 
     sourceSets {
         test.resources {
-            // テスト時にsrc/main/resourcesにある設定ファイルを使用する
+            // 테스트시 src/main/resources 에 있는 설정 파일을 사용한다.
             srcDirs "src/main/resources"
             srcDirs "src/test/resources"
         }
@@ -78,7 +78,7 @@ subprojects {
     }
 
     bootRun {
-        sourceResources sourceSets.main
+        sourceResources sourceSets.main // 6번
         jvmArgs "-XX:TieredStopAtLevel=1", "-Xverify:none"
     }
 
@@ -91,6 +91,7 @@ subprojects {
     ext["groovy.version"] = groovyVersion
     
     dependencies {
+        // 스프링 프레임워크
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         testCompileOnly "org.projectlombok:lombok:${lombokVersion}"

@@ -1,180 +1,135 @@
 # Spring Boot Sample Application
 
-[![Build Status](https://travis-ci.org/miyabayt/spring-boot-doma2-sample.svg?branch=master)](https://travis-ci.org/miyabayt/spring-boot-doma2-sample)
+[![Build Status](https://travis-ci.org/miyabayt/spring-boot-doma2-sample.svg?branch=2018_springbootbook)](https://travis-ci.org/miyabayt/spring-boot-doma2-sample)
 [![Documentation Status](https://readthedocs.org/projects/spring-boot-doma2-sample/badge/?version=latest)](http://spring-boot-doma2-sample.readthedocs.io/ja/latest/?badge=latest)
-[![Job Status](https://inspecode.rocro.com/badges/github.com/miyabayt/spring-boot-doma2-sample/status?token=5RLoJBnCJQuFjszsv4tmRqgI8obDhl6BmLfh4fgtgaQ)](https://inspecode.rocro.com/jobs/github.com/miyabayt/spring-boot-doma2-sample/latest?completed=true)
 
-## ローカル環境
+## 로컬 환경
 
-ソースのダウンロード
+소스의 다운로드
 ```bash
 $ git clone https://github.com/miyabayt/spring-boot-doma2-sample.git
 ```
 
-### 開発環境（IntelliJ）
+### 개발 환경（IntelliJ）
 
-#### 必要なプラグイン・設定
+#### 필요한 플러그인・설정
 
-- Lombok pluginをインストールする。
-  - Settings > Build, Excecution, Deployment > Compiler > Annotation Processor > `Enable Annotation Processing`をONにする。
-- Eclipse Code Formatterをインストールする。
-  - Settings > Other Settings > Eclipse Code Formatter > `Use the Eclipse code formatter`をONにする。
-    - `Eclipse Java Formatter config file`に`eclipse-formatter.xml`を指定する。
-- bootRunを実行している場合でもビルドされるようにする。
-  - Intellij > Ctrl+Shift+A > type Registry... > `compiler.automake.allow.when.app.running`をONにする。
-- Windowsの場合は、コンソール出力が文字化けするため、`C:¥Program Files¥JetBrains¥IntelliJ Idea xx.x.x¥bin`の中にある`idea64.exe.vmoptions`ファイルに`-Dfile.encoding=UTF-8`を追記する。
-- ブラウザにLiveReload機能拡張をインストールする。
-  - `http://livereload.com/extensions/`から各ブラウザの機能拡張をダウンロードする。
+- Lombok plugin을 인스톨한다.
+  - Settings > Build, Excecution, Deployment > Compiler > Annotation Processor > `Enable Annotation Processing`을 ON으로 한다.
+- Eclipse Code Formatter을 인스톨한다.
+  - Settings > Other Settings > Eclipse Code Formatter > `Use the Eclipse code formatter`를 ON으로 한다.
+    - `Eclipse Java Formatter config file`에 `eclipse-formatter.xml`를 지정한다.
+- bootRun을 실행하고 있는 경우에도 빌드되도록 한다.
+  - Intellij > Ctrl+Shift+A > type Registry... > `compiler.automake.allow.when.app.running`을 ON으로 한다.
+- Windows의 경우는, 콘솔 출력이 문자깨짐이 발생하므로、`C:¥Program Files¥JetBrains¥IntelliJ Idea xx.x.x¥bin`의 안에 있는 `idea64.exe.vmoptions`파일에 `-Dfile.encoding=UTF-8`을 추기한다.
+- 브라우저에 LiveReload기능 확장을 인스톨한다.
+  - `http://livereload.com/extensions/`에서 각 브라우저의 기능 확장을 다운로드한다.
 
-### Docker APIの有効化
+### Docker API의 유효화
 
-#### Windows10の場合
-* Settings > General > `Expose daemon on tcp://...`をONにする。
+#### Windows10의 경우
+* Settings > General > `Expose daemon on tcp://...`을 ON으로 한다.
 
-#### MacOSXの場合
-* デフォルトで`unix:///var/run/docker.sock`に接続できる。
-* TCPでAPIを利用したい場合は、下記を実施する。
+#### MacOSX의 경우
+* 디폴트로 `unix:///var/run/docker.sock`에 접속할 수 있다.
+* TCP로 API를 이용하고 싶은 경우는, 다음을 실시한다.
 
 ```bash
 $ brew install socat
 $ socat -4 TCP-LISTEN:2375,fork UNIX-CONNECT:/var/run/docker.sock &
 ```
 
-#### Docker Toolboxの場合
-* 後述の`Dockerの起動`の手順を実施する。
+#### Docker Toolbox의 경우
+* 후술할 `Docker의 기동`의 절차를 실시한다.
 
-### Dockerの起動
-MySQLなどのサーバーを立ち上げる。
+### Docker의 기동
+MySQL등의 서버를 기동한다.
 
-#### Windows10、MacOSXの場合
+#### Windows10、MacOSX의 경우
 ```bash
 $ cd /path/to/spring-boot-doma2-sample
 $ ./gradlew composeUp
 ```
 
-#### Docker Toolboxの場合
-* `application-development.yml`を編集する。
-  * `spring.datasource.url`の`127.0.0.1:3306`を`192.168.99.100:3306`に変更する。
-* `Docker CLI`でdocker-composeを実行する。
+#### Docker Toolbox의 경우
+* `application-development.yml`을 편집한다.
+  * `spring.datasource.url`의 `127.0.0.1:3306`を`192.168.99.100:3306`으로 변경한다.
+* `Docker CLI`로 docker-compose를 실행한다.
 ```bash
 $ cd /path/to/spring-boot-doma2-sample/docker
 $ docker-compose up
 ```
 
-### FakeSMTPの起動
-メール送信のテストのためFakeSMTPを立ち上げる。
+### FakeSMTP의 기동
+메일 송신의 테스트를 위해 FakeSMTP을 기동한다.
 
 ```bash
 $ cd /path/to/spring-boot-doma2-sample
 $ ./gradlew startFakeSmtpServer
 ```
 
-### アプリケーションの起動
+### 애플리케이션의 기동
 
-#### 管理側
+#### 관리쪽
 ```bash
 $ # admin application
 $ cd /path/to/spring-boot-doma2-sample
 $ ./gradlew :sample-web-admin:bootRun
 ```
 
-#### フロント側
+#### 프론트쪽
 ```bash
 $ # front application
 $ cd /path/to/spring-boot-doma2-sample
 $ ./gradlew :sample-web-front:bootRun
 ```
 
-#### バッチ
+#### 배치
 ```bash
-$ # 担当者情報取り込みバッチを起動する
+$ # 담당자 정보 데이터 로드 배치를 기동한다
 $ cd /path/to/spring-boot-doma2-sample
 $ ./gradlew :sample-batch:bootRun -Pargs="--job=importStaffJob"
 ```
 
-### 接続先情報
-#### テストユーザー test@sample.com / passw0rd
+### 접속처 정보
+#### 테스트 유저 test@sample.com / passw0rd
 
-| 接続先| URL|
+| 접속처| URL|
 | :-----| :---------------------------------------|
-| 管理側画面| http://localhost:18081/admin|
-| 管理側API| http://localhost:18081/admin/api/v1/users|
-| フロント側| http://localhost:18080/|
+| 관리쪽 화면| http://localhost:18081/admin|
+| 관리쪽 API| http://localhost:18081/admin/api/v1/users.json|
+| 프론트 쪽| http://localhost:18080/|
 
-#### データベース接続先
+#### 데이터베이스 접속처
 
 ```bash
-# Windows10、MacOSXの場合
+# Windows10、MacOSX의 경우
 mysql -h 127.0.0.1 -P 3306 -uroot -ppassw0rd sample
 
-# Docker Toolboxの場合
+# Docker Toolbox의 경우
 mysql -h 192.168.99.100 -P 3306 -uroot -ppassw0rd sample
 ```
 
-#### ブラウザを用いた自動テスト（結合テスト）
-実行方法
-
-| テスト対象| 実行方法|
-| :-----| :---------------------------------------|
-| 管理側画面| gradlew :it/sample-web-admin:test
-| フロント側| gradlew :it/sample-web-front:test
-
-※ IntelliJから起動する場合は他のテストと同様にテストクラスを選択して実行してください
-
-CIなどで結合テストを行わない場合は以下のようにして対象から外します
-```bash
-$ ./gradlew clean test --info -x :it/sample-web-admin:test -x :it/sample-web-front:test
-```
-
-### コード自動生成（おまけ）
+### 코드 자동생성（덤）
 ```bash
 $ cd /path/to/spring-boot-doma2-sample
 $ ./gradlew codegen -PsubSystem=system -Pfunc=client -PfuncStr=取引先 [-Ptarget=dao|dto|repository|service|controller|html]
 ```
 
-## その他
-### IntelliJから自動テストが実行できない
-自動テスト実行時に以下のように表示されて実行できない場合があります
- ```
- Command Line is too Long. Shorten command line for your_test or also for JUnit default configuration. 
-```
+## 참고
 
-その場合は以下を試みましょう[（参考）](https://stackoverflow.com/questions/47926382/how-to-configure-shorten-command-line-method-for-whole-project-in-intellij)
-
-以下のファイルをエディタで開く
-```
-/path/to/spring-boot-doma2-sample/.idea/workspace.xml 
-```
-
-以下を
-```xml
-<property name="dynamic.classpath" value="true" />
-```
-
-以下のタグの中に追加する
-
-```xml
-  <component name="PropertiesComponent">
-.
-.
-.
-  </component>
-```
-
-## 参考
-
-| プロジェクト| 概要|
+| 프로젝트| 개요|
 | :---------------------------------------| :-------------------------------|
-| [Lombok Project](https://projectlombok.org/)| 定型的なコードを書かなくてもよくする|
+| [Lombok Project](https://projectlombok.org/)| 정형적인 코드를 작성하지 않아도 된다|
 | [Springframework](https://projects.spring.io/spring-framework/)| Spring Framework|
-| [Spring Security](https://projects.spring.io/spring-security/)| セキュリティ対策、認証・認可のフレームワーク|
-| [Doma2](https://doma.readthedocs.io/ja/stable/)| O/Rマッパー|
-| [spring-boot-doma2](https://github.com/domaframework/doma-spring-boot)| Doma2とSpring Bootを連携する|
-| [Flyway](https://flywaydb.org/)| DBマイグレーションツール|
-| [Thymeleaf](http://www.thymeleaf.org/)| テンプレートエンジン|
-| [Thymeleaf Layout Dialect](https://ultraq.github.io/thymeleaf-layout-dialect/)| テンプレートをレイアウト化する|
-| [WebJars](https://www.webjars.org/)| jQueryなどのクライアント側ライブラリをJARとして組み込む|
-| [ModelMapper](http://modelmapper.org/)| Beanマッピングライブラリ|
-| [Ehcache](http://www.ehcache.org/)| キャッシュライブラリ|
-| [Spock](http://spockframework.org/)| テストフレームワーク|
-| [Mockito](http://site.mockito.org/)| モッキングフレームワーク |
+| [Spring Security](https://projects.spring.io/spring-security/)| 시큐리티 대책, 인증・인가의 프레임워크|
+| [Doma2](https://doma.readthedocs.io/ja/stable/)| O/R매퍼|
+| [spring-boot-doma2](https://github.com/domaframework/doma-spring-boot)| Doma2와 Spring Boot를 연계한다|
+| [Flyway](https://flywaydb.org/)| DB마이그레이션 도구|
+| [Thymeleaf](http://www.thymeleaf.org/)| 템플릿 엔진|
+| [Thymeleaf Layout Dialect](https://ultraq.github.io/thymeleaf-layout-dialect/)| 템플릿을 레이아웃화 한다|
+| [WebJars](https://www.webjars.org/)| jQuery등의 클라이언트쪽 라이브러리를 JAR로 로딩|
+| [ModelMapper](http://modelmapper.org/)| Bean매핑 라이브러리|
+| [Ehcache](http://www.ehcache.org/)| 캐시 라이브러리|
+| [Spock](http://spockframework.org/)| 테스트 프레임워크|
+| [Mockito](http://site.mockito.org/)| 모킹 프레임워크 |
