@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
+    <!-- 스프링 부트 디폴트 로그 출력 설정으로 설정 간소화 -->
     <include resource="org/springframework/boot/logging/logback/defaults.xml" />
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}/}spring.log}"/>
     <include resource="org/springframework/boot/logging/logback/console-appender.xml" />

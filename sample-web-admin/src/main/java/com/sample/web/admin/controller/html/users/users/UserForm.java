@@ -21,11 +21,11 @@ public class UserForm extends BaseForm {
 
     Long id;
 
-    // 名前
+    // 이름
     @NotEmpty
     String firstName;
 
-    // 苗字
+    // 성
     @NotEmpty
     String lastName;
 
@@ -35,22 +35,22 @@ public class UserForm extends BaseForm {
     @NotEmpty
     String passwordConfirm;
 
-    // メールアドレス
+    // 메일주소
     @NotEmpty
     @Email
     String email;
 
-    // 電話番号
+    // 전화번호
     @Digits(fraction = 0, integer = 10)
     String tel;
 
-    // 郵便番号
+    // 우편번호
     String zip;
 
-    // 住所
+    // 주소
     String address;
 
-    // 添付ファイル
+    // 첨부파일
     @ContentType(allowed = { MediaType.IMAGE_PNG_VALUE, MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_GIF_VALUE })
-    transient MultipartFile userImage; // serializableではないのでtransientにする
+    transient MultipartFile userImage; // transient 키워드는 Serialize하는 과정에서 제외하고 싶은 경우 선언하는 키워드이다. field는 유지되지만 null값이 입력 된다.
 }

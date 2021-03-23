@@ -8,7 +8,7 @@ import org.springframework.validation.Errors;
 import com.sample.domain.validator.AbstractValidator;
 
 /**
- * ユーザー登録 入力チェック
+ * 사용자 등록 입력 체크
  */
 @Component
 public class UserFormValidator extends AbstractValidator<UserForm> {
@@ -16,7 +16,7 @@ public class UserFormValidator extends AbstractValidator<UserForm> {
     @Override
     protected void doValidate(UserForm form, Errors errors) {
 
-        // 確認用パスワードと突き合わせる
+        // 확인용 암호와 일치하는지 체크한다.
         if (isNotEquals(form.getPassword(), form.getPasswordConfirm())) {
             errors.rejectValue("password", "users.unmatchPassword");
             errors.rejectValue("passwordConfirm", "users.unmatchPassword");

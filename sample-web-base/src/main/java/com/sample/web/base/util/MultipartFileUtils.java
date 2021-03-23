@@ -14,13 +14,13 @@ import com.sample.domain.dto.common.MultipartFileConvertible;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * MultipartFile関連のユーティリティ
+ * MultipartFile관련 유틸리티
  */
 @Slf4j
 public class MultipartFileUtils {
 
     /**
-     * MultipartFileConvertibleに値を詰め替えます。
+     * MultipartFileConvertible에 값을 채워넣는다
      * 
      * @param from
      * @param to
@@ -31,6 +31,7 @@ public class MultipartFileUtils {
         to.setContentType(from.getContentType());
 
         try {
+            // 바이트 배열을 세트한다.
             to.setContent(BZip2Data.of(from.getBytes()));
         } catch (IOException e) {
             log.error("failed to getBytes", e);
@@ -39,11 +40,11 @@ public class MultipartFileUtils {
     }
 
     /**
-     * ファイルを保存します。
+     * 파일을 보관한다.
      *
      * @param location
      * @param file
-     *            保存先ディレクトリ
+     *            보관처 디렉터리
      */
     public static void saveFile(Path location, MultipartFile file) {
         Assert.notNull(file, "file can't be null");
@@ -54,10 +55,10 @@ public class MultipartFileUtils {
                 throw new IllegalArgumentException("cloud not save empty file. " + filename);
             }
 
-            // ディレクトリがない場合は作成する
+            // 디렉터리가 없는 경우는 작성한다
             FileUtils.createDirectories(location);
 
-            // インプットストリームをファイルに書き出す
+            // INPUT 스트림을 파일에 기록한다.
             Files.copy(file.getInputStream(), location.resolve(filename));
 
         } catch (IOException e) {

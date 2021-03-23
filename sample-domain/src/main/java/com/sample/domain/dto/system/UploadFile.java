@@ -17,7 +17,7 @@ public class UploadFile extends DomaDtoImpl implements MultipartFileConvertible 
 
     private static final long serialVersionUID = 1738092593334285554L;
 
-    @OriginalStates // 差分UPDATEのために定義する
+    @OriginalStates // 차분 (차이가 발생한 항목(컬럼)) UPDATE를 위한 정의
     UploadFile originalStates;
 
     @Id
@@ -25,17 +25,17 @@ public class UploadFile extends DomaDtoImpl implements MultipartFileConvertible 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    // ファイル名
+    // 파일명
     @Column(name = "file_name")
     String filename;
 
-    // オリジナルファイル名
+    // 원래 파일명
     @Column(name = "original_file_name")
     String originalFilename;
 
-    // コンテンツタイプ
+    // 콘텐츠 타입
     String contentType;
 
-    // コンテンツ
-    BZip2Data content;
+    // 콘텐츠
+    BZip2Data content; // byte[] 를 포함하는 도메인 클래스 (값 객체)
 }

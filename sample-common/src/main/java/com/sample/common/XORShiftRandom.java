@@ -1,7 +1,7 @@
 package com.sample.common;
 
 /**
- * XORShift乱数生成器
+ * XORShift 난수 생성기
  */
 public class XORShiftRandom {
 

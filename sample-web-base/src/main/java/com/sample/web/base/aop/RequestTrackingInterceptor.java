@@ -13,7 +13,7 @@ import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 処理時間をDEBUGログに出力する
+ * 처리시간을 DEBUG 로그에 출력한다.
  */
 @Slf4j
 public class RequestTrackingInterceptor extends BaseHandlerInterceptor {
@@ -22,19 +22,19 @@ public class RequestTrackingInterceptor extends BaseHandlerInterceptor {
 
     private static final String HEADER_X_TRACK_ID = "X-Track-Id";
 
-    // 乱数生成器
+    // 난수 생성기
     private final XORShiftRandom random = new XORShiftRandom();
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        // コントローラーの動作前
+        // 컨트롤러 동작 전
 
-        // 現在時刻を記録
+        // 현재 시각을 기록
         val beforeNanoSec = System.nanoTime();
         startTimeHolder.set(beforeNanoSec);
 
-        // トラッキングID
+        // 추적 ID
         val trackId = getTrackId(request);
         MDC.put(HEADER_X_TRACK_ID, trackId);
         response.setHeader(HEADER_X_TRACK_ID, trackId);
@@ -45,7 +45,7 @@ public class RequestTrackingInterceptor extends BaseHandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        // 処理完了後
+        // 처리 완료 후
 
         val beforeNanoSec = startTimeHolder.get();
 
@@ -57,12 +57,12 @@ public class RequestTrackingInterceptor extends BaseHandlerInterceptor {
         val elapsedMilliSec = NANOSECONDS.toMillis(elapsedNanoSec);
         log.info("path={}, method={}, Elapsed {}ms.", request.getRequestURI(), request.getMethod(), elapsedMilliSec);
 
-        // 破棄する
+        // 파기 한다.
         startTimeHolder.remove();
     }
 
     /**
-     * トラッキングIDを取得する。
+     * 추적 ID를 획득한다.
      * 
      * @param request
      * @return

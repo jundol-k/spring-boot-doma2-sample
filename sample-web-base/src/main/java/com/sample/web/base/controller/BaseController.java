@@ -19,7 +19,7 @@ public class BaseController {
     protected ModelMapper modelMapper;
 
     /**
-     * 入力エラーの共通メッセージを返します。
+     * 입력 오류의 공통 메시지를 반환한다.
      * 
      * @return
      */
@@ -28,7 +28,7 @@ public class BaseController {
     }
 
     /**
-     * コンテキストを返します。
+     * 컨텍스트를 반환한다.
      * 
      * @return
      */
@@ -37,7 +37,7 @@ public class BaseController {
     }
 
     /**
-     * メッセージを取得します。
+     * 메시지를 취득한다.
      *
      * @param key
      * @param args
@@ -48,7 +48,7 @@ public class BaseController {
     }
 
     /**
-     * ロケールを指定してメッセージを取得します。
+     * 로케일을 지정하여 메시지를 취득한다.
      *
      * @param key
      * @param args

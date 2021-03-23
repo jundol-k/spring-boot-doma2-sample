@@ -33,7 +33,7 @@ import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * ユーザー管理
+ * 사용자관리
  */
 @Controller
 @RequestMapping("/users/users")
@@ -71,7 +71,7 @@ public class UserHtmlController extends AbstractHtmlController {
     }
 
     /**
-     * 登録画面 初期表示
+     * 등록화면 초기표시
      *
      * @param form
      * @param model
@@ -80,7 +80,7 @@ public class UserHtmlController extends AbstractHtmlController {
     @GetMapping("/new")
     public String newUser(@ModelAttribute("userForm") UserForm form, Model model) {
         if (!form.isNew()) {
-            // SessionAttributeに残っている場合は再生成する
+            // SessionAttribute에 남아있는 경우는 재생성한다
             model.addAttribute("userForm", new UserForm());
         }
 
@@ -88,7 +88,7 @@ public class UserHtmlController extends AbstractHtmlController {
     }
 
     /**
-     * 登録処理
+     * 사용자 등록 처리
      *
      * @param form
      * @param br
@@ -99,47 +99,47 @@ public class UserHtmlController extends AbstractHtmlController {
     public String newUser(@Validated @ModelAttribute("userForm") UserForm form, BindingResult br,
             RedirectAttributes attributes) {
 
-        // 入力チェックエラーがある場合は、元の画面にもどる
+        // 입력 체크 오류가 있다면 원래의 화면으로 돌아간다.
         if (br.hasErrors()) {
             setFlashAttributeErrors(attributes, br);
             return "redirect:/users/users/new";
         }
 
-        // 入力値からDTOを作成する
+        // 입력값으로부터 DTO를 작성한다
         val inputUser = modelMapper.map(form, User.class);
         val password = form.getPassword();
 
-        // パスワードをハッシュ化する
+        // 패스워드를 해시화한다
         inputUser.setPassword(passwordEncoder.encode(password));
 
-        // 登録する
+        // 등록한다
         val createdUser = userService.create(inputUser);
 
         return "redirect:/users/users/show/" + createdUser.getId();
     }
 
     /**
-     * 一覧画面 初期表示
+     * 리스트화면 초기표시
      *
      * @param model
      * @return
      */
     @GetMapping("/find")
     public String findUser(@ModelAttribute SearchUserForm form, Model model) {
-        // 入力値を詰め替える
+        // 입력값을 채워넣는다
         val criteria = modelMapper.map(form, UserCriteria.class);
 
-        // 10件区切りで取得する
+        // 10건씩 취득한다
         val pages = userService.findAll(criteria, form);
 
-        // 画面に検索結果を渡す
+        // 화면에 검색결과를 건넨다
         model.addAttribute("pages", pages);
 
         return "modules/users/users/find";
     }
 
     /**
-     * 検索結果
+     * 검색결과
      *
      * @param form
      * @param br
@@ -150,7 +150,7 @@ public class UserHtmlController extends AbstractHtmlController {
     public String findUser(@Validated @ModelAttribute("searchUserForm") SearchUserForm form, BindingResult br,
             RedirectAttributes attributes) {
 
-        // 入力チェックエラーがある場合は、元の画面にもどる
+        // 입력체크 오류가 있는 경우는, 원래의 화면으로 돌아간다
         if (br.hasErrors()) {
             setFlashAttributeErrors(attributes, br);
             return "redirect:/users/users/find";
@@ -160,7 +160,7 @@ public class UserHtmlController extends AbstractHtmlController {
     }
 
     /**
-     * 詳細画面
+     * 상세화면
      *
      * @param userId
      * @param model
@@ -168,15 +168,15 @@ public class UserHtmlController extends AbstractHtmlController {
      */
     @GetMapping("/show/{userId}")
     public String showUser(@PathVariable Long userId, Model model) {
-        // 1件取得する
+        // 1건 취득한다
         val user = userService.findById(userId);
         model.addAttribute("user", user);
 
         if (user.getUploadFile() != null) {
-            // 添付ファイルを取得する
+            // 첨부파일을 취득한다
             val uploadFile = user.getUploadFile();
 
-            // Base64デコードして解凍する
+            // Base64디코딩하여 압축을 푼다
             val base64data = uploadFile.getContent().toBase64();
             val sb = new StringBuilder().append("data:image/png;base64,").append(base64data);
 
@@ -187,7 +187,7 @@ public class UserHtmlController extends AbstractHtmlController {
     }
 
     /**
-     * 編集画面 初期表示
+     * 편집화면 초기표시
      *
      * @param userId
      * @param form
@@ -197,12 +197,12 @@ public class UserHtmlController extends AbstractHtmlController {
     @GetMapping("/edit/{userId}")
     public String editUser(@PathVariable Long userId, @ModelAttribute("userForm") UserForm form, Model model) {
 
-        // セッションから取得できる場合は、読み込み直さない
+        // 입력체크 오륲가 있는 경우는, 원래의 화면으로 돌아간다
         if (!hasErrors(model)) {
-            // 1件取得する
+            // 1건 취득한다
             val user = userService.findById(userId);
 
-            // 取得したDtoをFromに詰め替える
+            // 취득한 Dto를 Form에 채워넣는다
             modelMapper.map(user, form);
         }
 
@@ -210,7 +210,7 @@ public class UserHtmlController extends AbstractHtmlController {
     }
 
     /**
-     * 編集画面 更新処理
+     * 편집화면 갱신처리
      *
      * @param form
      * @param br
@@ -223,19 +223,19 @@ public class UserHtmlController extends AbstractHtmlController {
     public String editUser(@Validated @ModelAttribute("userForm") UserForm form, BindingResult br,
             @PathVariable Long userId, SessionStatus sessionStatus, RedirectAttributes attributes) {
 
-        // 入力チェックエラーがある場合は、元の画面にもどる
+        // 입력체크 오류가 있는 경우는, 원래의 화면으로 돌아간다
         if (br.hasErrors()) {
             setFlashAttributeErrors(attributes, br);
             return "redirect:/users/users/edit/" + userId;
         }
 
-        // 更新対象を取得する
+        // 갱신대상을 취득한다
         val user = userService.findById(userId);
 
-        // 入力値を詰め替える
+        // 입력값을 채워넣는다
         modelMapper.map(form, user);
 
-        // パスワードをハッシュ化する
+        // 암호를 해시화해 저장한다.
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         val image = form.getUserImage();
@@ -245,17 +245,17 @@ public class UserHtmlController extends AbstractHtmlController {
             user.setUploadFile(uploadFile);
         }
 
-        // 更新する
+        // 갱신한다
         val updatedUser = userService.update(user);
 
-        // セッションのuserFormをクリアする
+        // 세션 userForm을 클리어한다.
         sessionStatus.setComplete();
 
         return "redirect:/users/users/show/" + updatedUser.getId();
     }
 
     /**
-     * 削除処理
+     * 삭제처리
      *
      * @param userId
      * @param attributes
@@ -263,64 +263,64 @@ public class UserHtmlController extends AbstractHtmlController {
      */
     @PostMapping("/remove/{userId}")
     public String removeUser(@PathVariable Long userId, RedirectAttributes attributes) {
-        // 論理削除する
+        // 논리삭제한다
         userService.delete(userId);
 
-        // 削除成功メッセージ
+        // 삭제 성공 메시
         attributes.addFlashAttribute(GLOBAL_MESSAGE, getMessage(MESSAGE_DELETED));
 
         return "redirect:/users/users/find";
     }
 
     /**
-     * CSVダウンロード
+     * CSV 다운로드
      *
      * @param filename
      * @return
      */
     @GetMapping("/download/{filename:.+\\.csv}")
     public ModelAndView downloadCsv(@PathVariable String filename) {
-        // 全件取得する
+        // 전건 취득한다
         val users = userService.findAll(new UserCriteria(), Pageable.NO_LIMIT);
 
-        // 詰め替える
+        // 채워넣는다
         List<UserCsv> csvList = modelMapper.map(users.getData(), toListType(UserCsv.class));
 
-        // CSVスキーマクラス、データ、ダウンロード時のファイル名を指定する
+        // CSV 스키마 클래스, 데이터, 다운로드 시의 파일명을 지정한다
         val view = new CsvView(UserCsv.class, csvList, filename);
 
         return new ModelAndView(view);
     }
 
     /**
-     * Excelダウンロード
+     * Excel 다운로드
      *
      * @param filename
      * @return
      */
     @GetMapping(path = "/download/{filename:.+\\.xlsx}")
     public ModelAndView downloadExcel(@PathVariable String filename) {
-        // 全件取得する
+        // 전건 취득한다
         val users = userService.findAll(new UserCriteria(), Pageable.NO_LIMIT);
 
-        // Excelプック生成コールバック、データ、ダウンロード時のファイル名を指定する
+        // Excel 북 생성 콜백, 데이터, 다운로드 시의 파일명을 지정한다
         val view = new ExcelView(new UserExcel(), users.getData(), filename);
 
         return new ModelAndView(view);
     }
 
     /**
-     * PDFダウンロード
+     * PDF 다운로드
      *
      * @param filename
      * @return
      */
     @GetMapping(path = "/download/{filename:.+\\.pdf}")
     public ModelAndView downloadPdf(@PathVariable String filename) {
-        // 全件取得する
+        // 모든 건을 취득한다
         val users = userService.findAll(new UserCriteria(), Pageable.NO_LIMIT);
 
-        // 帳票レイアウト、データ、ダウンロード時のファイル名を指定する
+        // 서류 레이아웃, 데이터, 다운로드 시의 파일명을 지정한다
         val view = new PdfView("reports/users.jrxml", users.getData(), filename);
 
         return new ModelAndView(view);

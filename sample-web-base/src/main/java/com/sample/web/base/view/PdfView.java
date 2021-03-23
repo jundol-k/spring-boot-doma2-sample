@@ -28,7 +28,7 @@ import net.sf.jasperreports.export.SimpleExporterInput;
 import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 /**
- * PDFビュー
+ * PDF 뷰
  */
 public class PdfView extends AbstractView {
 
@@ -39,7 +39,7 @@ public class PdfView extends AbstractView {
     protected String filename;
 
     /**
-     * コンストラクタ
+     * 생성자
      *
      * @param report
      * @param data
@@ -57,14 +57,14 @@ public class PdfView extends AbstractView {
     protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        // IEの場合はContent-Lengthヘッダが指定されていないとダウンロードが失敗するので、
-        // サイズを取得するための一時的なバイト配列ストリームにコンテンツを書き出すようにする
+        // IE의 경우 Content-Length 헤더가 지정되어 있지 않으면 다운로드에 실패하므로
+        // 사이즈를 취득하기 위한 일시적인 바이트 배열 스트림에 콘텐츠를 출력한다.
         val baos = createTemporaryOutputStream();
 
-        // 帳票レイアウト
+        // 서류 레이아웃
         val report = loadReport();
 
-        // データの設定
+        // 데이터 설정
         val dataSource = new JRBeanCollectionDataSource(this.data);
         val print = JasperFillManager.fillReport(report, model, dataSource);
 
@@ -73,16 +73,17 @@ public class PdfView extends AbstractView {
         exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(baos));
         exporter.exportReport();
 
-        // ファイル名に日本語を含めても文字化けしないようにUTF-8にエンコードする
+        // 파일명에 한국어를 포함해도 문자가 깨지지 않도록 UTF-8로 인코딩한다.
         val encodedFilename = EncodeUtils.encodeUtf8(filename);
         val contentDisposition = String.format("attachment; filename*=UTF-8''%s", encodedFilename);
         response.setHeader(CONTENT_DISPOSITION, contentDisposition);
 
+        // Content-Type과 Content-Length 헤더를 설정한 후에 response로 작성한다.
         writeToResponse(response, baos);
     }
 
     /**
-     * 帳票レイアウトを読み込む
+     * 서류 레이아웃을 로딩한다.
      *
      * @return
      */
@@ -102,7 +103,7 @@ public class PdfView extends AbstractView {
                 }
             } else {
                 throw new IllegalArgumentException(
-                        ".jasper または .jrxml の帳票を指定してください。 [" + fileName + "] must end in either ");
+                        ".jasper 또는 .jrxml 의 서류 포맷을 지정해주세요 [" + fileName + "] must end in either ");
             }
         } catch (IOException e) {
             throw new IllegalArgumentException("failed to load report. " + resource, e);

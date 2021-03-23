@@ -20,33 +20,33 @@ public class UserExcel implements ExcelView.Callback {
     @Override
     public void buildExcelWorkbook(Map<String, Object> model, Collection<?> data, Workbook workbook) {
 
-        // シートを作成する
-        Sheet sheet = workbook.createSheet("ユーザー");
+        // 시트 작성하기
+        Sheet sheet = workbook.createSheet("사용자");
         sheet.setDefaultColumnWidth(30);
 
-        // フォント
+        // 폰트
         Font font = workbook.createFont();
-        font.setFontName("メイリオ");
+        font.setFontName("굴림");
         font.setBold(true);
         font.setColor(WHITE.getIndex());
 
-        // ヘッダーのスタイル
+        // 헤더 스타일
         CellStyle style = workbook.createCellStyle();
         style.setFillForegroundColor(DARK_GREEN.getIndex());
         style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
         style.setFont(font);
 
         Row header = sheet.createRow(0);
-        header.createCell(0).setCellValue("苗字");
+        header.createCell(0).setCellValue("이름");
         header.getCell(0).setCellStyle(style);
-        header.createCell(1).setCellValue("名前");
+        header.createCell(1).setCellValue("성");
         header.getCell(1).setCellStyle(style);
-        header.createCell(2).setCellValue("メールアドレス");
+        header.createCell(2).setCellValue("메일주소");
         header.getCell(2).setCellStyle(style);
 
-        // 明細
+        // 세부사항
         @SuppressWarnings("unchecked")
-        val users = (List<User>) data;
+        val users = (List<User>) data; // 컨트롤러에서 지정하는 데이터의 키
 
         int count = 1;
         for (User user : users) {

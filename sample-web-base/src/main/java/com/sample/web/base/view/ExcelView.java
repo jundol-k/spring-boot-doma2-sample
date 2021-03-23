@@ -16,7 +16,7 @@ import com.sample.common.util.EncodeUtils;
 import lombok.val;
 
 /**
- * Excelビュー
+ * Excel뷰
  */
 public class ExcelView extends AbstractXlsxView {
 
@@ -27,14 +27,14 @@ public class ExcelView extends AbstractXlsxView {
     protected Callback callback;
 
     /**
-     * コンストラクタ
+     * 생성자
      */
     public ExcelView() {
         setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=Windows-31J;");
     }
 
     /**
-     * コンストラクタ
+     * 생성자
      *
      * @param callback
      * @param data
@@ -51,19 +51,19 @@ public class ExcelView extends AbstractXlsxView {
     protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        // ファイル名に日本語を含めても文字化けしないようにUTF-8にエンコードする
+        // 파일명에 한국어를 포함해도 문자가 깨지지 않도록 UTF-8로 인코딩한다.
         val encodedFilename = EncodeUtils.encodeUtf8(filename);
         val contentDisposition = String.format("attachment; filename*=UTF-8''%s", encodedFilename);
         response.setHeader(CONTENT_DISPOSITION, contentDisposition);
 
-        // Excelブックを構築する
+        // Excel 통합 문서를 구축한다.
         callback.buildExcelWorkbook(model, this.data, workbook);
     }
 
     public interface Callback {
 
         /**
-         * Excelブックを構築します。
+         * Excel 통합 문서를 구축한다.
          *
          * @param model
          * @param data

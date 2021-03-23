@@ -24,7 +24,7 @@ import lombok.Setter;
 import lombok.val;
 
 /**
- * CSVビュー
+ * CSV 뷰
  */
 public class CsvView extends AbstractView {
 
@@ -41,7 +41,7 @@ public class CsvView extends AbstractView {
     protected List<String> columns;
 
     /**
-     * CSVマッパーを生成する。
+     * CSV 매퍼를 생성한다.
      *
      * @return
      */
@@ -53,7 +53,7 @@ public class CsvView extends AbstractView {
     }
 
     /**
-     * コンストラクタ
+     * 생성자
      *
      * @param clazz
      * @param data
@@ -75,18 +75,18 @@ public class CsvView extends AbstractView {
     protected final void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
 
-        // ファイル名に日本語を含めても文字化けしないようにUTF-8にエンコードする
+        // 파일명에 한국어를 포함해도 문자가 깨지지 않도록 UTF-8로 인코딩한다.
         val encodedFilename = EncodeUtils.encodeUtf8(filename);
         val contentDisposition = String.format("attachment; filename*=UTF-8''%s", encodedFilename);
 
         response.setHeader(CONTENT_TYPE, getContentType());
         response.setHeader(CONTENT_DISPOSITION, contentDisposition);
 
-        // CSVヘッダをオブジェクトから作成する
+        // CSV 헤더를 객체에서 작성한다.
         CsvSchema schema = csvMapper.schemaFor(clazz).withHeader();
 
         if (isNotEmpty(columns)) {
-            // カラムが指定された場合は、スキーマを再構築する
+            // 컬럼이 지정된 경우 스키마를 재구축한다.
             val builder = schema.rebuild().clearColumns();
             for (String column : columns) {
                 builder.addColumn(column);
@@ -94,7 +94,7 @@ public class CsvView extends AbstractView {
             schema = builder.build();
         }
 
-        // 書き出し
+        // 출력한다.
         val outputStream = createTemporaryOutputStream();
         try (Writer writer = new OutputStreamWriter(outputStream, "Windows-31J")) {
             csvMapper.writer(schema).writeValue(writer, data);

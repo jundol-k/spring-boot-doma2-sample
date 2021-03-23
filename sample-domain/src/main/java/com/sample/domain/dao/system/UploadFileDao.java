@@ -14,7 +14,7 @@ import com.sample.domain.dto.system.UploadFileCriteria;
 public interface UploadFileDao {
 
     /**
-     * アップロードファイルを取得します。
+     * 업로드 파일을 취득한다.
      *
      * @param criteria
      * @param options
@@ -24,7 +24,7 @@ public interface UploadFileDao {
     List<UploadFile> selectAll(UploadFileCriteria criteria, SelectOptions options);
 
     /**
-     * アップロードファイルを1件取得します。
+     * 업로드 파일을 1건 취득한다.
      *
      * @param id
      * @return
@@ -33,7 +33,7 @@ public interface UploadFileDao {
     UploadFile selectById(Long id);
 
     /**
-     * アップロードファイルを1件取得します。
+     * 업로드 파일을 1건 취득한다.
      *
      * @param criteria
      * @return
@@ -42,7 +42,7 @@ public interface UploadFileDao {
     UploadFile select(UploadFileCriteria criteria);
 
     /**
-     * アップロードファイルを登録します。
+     * 업로드 파일을 등록한다.
      *
      * @param uploadFile
      * @return
@@ -51,7 +51,7 @@ public interface UploadFileDao {
     int insert(UploadFile uploadFile);
 
     /**
-     * アップロードファイルを更新します。
+     * 업로드 파일을 갱신한다.
      *
      * @param uploadFile
      * @return
@@ -60,7 +60,7 @@ public interface UploadFileDao {
     int update(UploadFile uploadFile);
 
     /**
-     * アップロードファイルを物理削除します。
+     * 업로드 파일을 물리 삭제한다.
      *
      * @param uploadFile
      * @return
@@ -69,7 +69,7 @@ public interface UploadFileDao {
     int delete(UploadFile uploadFile);
 
     /**
-     * アップロードファイルを一括登録します。
+     * 업로드 파일을 일괄 등록한다.
      *
      * @param uploadFiles
      * @return
