@@ -5,12 +5,12 @@ import org.seasar.doma.jdbc.SelectOptions;
 import com.sample.domain.dto.common.Pageable;
 
 /**
- * Doma関連ユーティリティ
+ * 도마 관련 유틸리티
  */
 public class DomaUtils {
 
     /**
-     * SearchOptionsを作成して返します。
+     * SearchOptions를 작성해서 반환한다.
      *
      * @return
      */
@@ -19,7 +19,7 @@ public class DomaUtils {
     }
 
     /**
-     * SearchOptionsを作成して返します。
+     * SearchOptions를 작성해서 반환한다.
      *
      * @param pageable
      * @return
@@ -31,7 +31,7 @@ public class DomaUtils {
     }
 
     /**
-     * SearchOptionsを作成して返します。
+     * SearchOptions를 작성해서 반환한다.
      *
      * @param page
      * @param perpage

@@ -4,6 +4,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.seasar.doma.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,47 +22,54 @@ public class User extends DomaDtoImpl {
 
     private static final long serialVersionUID = 4512633005852272922L;
 
-    @OriginalStates // 差分UPDATEのために定義する
-    @JsonIgnore // APIのレスポンスに含めない
+    @OriginalStates // 차분UPDATE를 위해 정의한다
+    @JsonIgnore // API의 응답에 포함하지 않는다.
     User originalStates;
 
     @Id
-    @Column(name = "user_id")
+    @Column(name = "user_id") // id <-> user_id를 매핑한다.
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // MySQL의 AUTO_INCREMENT를 이용한다.
     Long id;
 
-    // ハッシュ化されたパスワード
+    // 해시된 패스워드
     @JsonIgnore
     String password;
 
-    // 名前
+    // 이름
+    @ApiModelProperty(value = "이름")
     String firstName;
 
-    // 苗字
+    // 성
+    @ApiModelProperty(value = "성")
     String lastName;
 
-    // メールアドレス
+    // 메일주소
     @Email
+    @ApiModelProperty(value = "메일주소")
     String email;
 
-    // 電話番号
+    // 전화번호
+    @ApiModelProperty(value = "전화번호", allowableValues = "range[0, 10]")
     @Digits(fraction = 0, integer = 10)
     String tel;
 
-    // 郵便番号
+    // 우편번호
+    @ApiModelProperty(value = "우편번호")
     @NotEmpty
     String zip;
 
-    // 住所
+    // 주소
+    @ApiModelProperty(value = "주소")
     @NotEmpty
     String address;
 
-    // 添付ファイルID
+    // 참부파일ID
     @JsonIgnore
     Long uploadFileId;
 
-    // 添付ファイル
-    @Transient // Domaで永続化しない
+    // 첨부파일
+    @Transient // Doma로 영속화되지 않는다(users 테이블에 upload_filed이라는 컬럼이 없기 때문에)
     @JsonIgnore
     UploadFile uploadFile;
 }

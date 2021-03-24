@@ -3,7 +3,7 @@ package com.sample.domain.dao;
 import java.time.LocalDateTime;
 
 /**
- * 監査情報ホルダー
+ * 감사정보 홀더
  */
 public class AuditInfoHolder {
 
@@ -12,7 +12,7 @@ public class AuditInfoHolder {
     private static final ThreadLocal<LocalDateTime> AUDIT_DATE_TIME = new ThreadLocal<>();
 
     /**
-     * 監査情報を保存します。
+     * 감사정보를 보관한다.
      * 
      * @param username
      */
@@ -22,7 +22,7 @@ public class AuditInfoHolder {
     }
 
     /**
-     * 監査ユーザーを返します。
+     * 감사 사용자를 반환한다.
      * 
      * @return
      */
@@ -31,7 +31,7 @@ public class AuditInfoHolder {
     }
 
     /**
-     * 監査時刻を返します。
+     * 감사 시각을 반환한다.
      * 
      * @return
      */
@@ -40,7 +40,7 @@ public class AuditInfoHolder {
     }
 
     /**
-     * 監査情報をクリアします。
+     * 감사 정보를 클리어한다.
      */
     public static void clear() {
         AUDIT_USER.remove();

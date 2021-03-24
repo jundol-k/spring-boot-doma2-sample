@@ -9,6 +9,6 @@ public class UserCriteria extends User {
 
     private static final long serialVersionUID = -1;
 
-    // 住所がNULLのデータに絞り込む
+    // 주소가 NULL인 데이터를 필터링
     Boolean onlyNullAddress;
 }

@@ -1,7 +1,7 @@
 package com.sample.domain.dao;
 
 /**
- * 二重送信防止チェックトークンホルダー
+ * 이중 송신 방지 체크 토큰 홀더
  */
 public class DoubleSubmitCheckTokenHolder {
 
@@ -10,7 +10,7 @@ public class DoubleSubmitCheckTokenHolder {
     private static final ThreadLocal<String> ACTUAL_TOKEN = new ThreadLocal<>();
 
     /**
-     * トークンを保存します。
+     * 토큰을 보관한다.
      *
      * @param expected
      * @param actual
@@ -21,7 +21,7 @@ public class DoubleSubmitCheckTokenHolder {
     }
 
     /**
-     * セッションに保存されていたトークンを返します。
+     * 세션에 보관되어 있던 토큰을 반환한다
      *
      * @return
      */
@@ -30,7 +30,7 @@ public class DoubleSubmitCheckTokenHolder {
     }
 
     /**
-     * 画面から渡ってきたトークンを返します。
+     * 화면으로부터 건네온 토큰을 반환한다.
      *
      * @return
      */
@@ -39,7 +39,7 @@ public class DoubleSubmitCheckTokenHolder {
     }
 
     /**
-     * 監査情報をクリアします。
+     * 토큰정보를 클리어한다.
      */
     public static void clear() {
         EXPECTED_TOKEN.remove();

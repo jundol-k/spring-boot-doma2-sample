@@ -21,13 +21,13 @@ import lombok.NoArgsConstructor;
 import lombok.val;
 import lombok.extern.slf4j.Slf4j;
 
-@NoArgsConstructor // コンストラクタが必須のため
+@NoArgsConstructor // 생성자가 필수이기 때문에 선언
 @Slf4j
 public class DefaultEntityListener<ENTITY> implements EntityListener<ENTITY> {
 
     @Override
     public void preInsert(ENTITY entity, PreInsertContext<ENTITY> context) {
-        // 二重送信防止チェック
+        // 이중 송신 방지 체크
         val expected = DoubleSubmitCheckTokenHolder.getExpectedToken();
         val actual = DoubleSubmitCheckTokenHolder.getActualToken();
 
@@ -40,8 +40,8 @@ public class DefaultEntityListener<ENTITY> implements EntityListener<ENTITY> {
             val createdAt = AuditInfoHolder.getAuditDateTime();
             val createdBy = AuditInfoHolder.getAuditUser();
 
-            domaDto.setCreatedAt(createdAt); // 作成日
-            domaDto.setCreatedBy(createdBy); // 作成者
+            domaDto.setCreatedAt(createdAt); // 생성일
+            domaDto.setCreatedBy(createdBy); // 생성자
         }
     }
 
@@ -55,11 +55,11 @@ public class DefaultEntityListener<ENTITY> implements EntityListener<ENTITY> {
 
             val methodName = context.getMethod().getName();
             if (StringUtils.startsWith("delete", methodName)) {
-                domaDto.setDeletedAt(updatedAt); // 削除日
-                domaDto.setDeletedBy(updatedBy); // 削除者
+                domaDto.setDeletedAt(updatedAt); // 삭제일
+                domaDto.setDeletedBy(updatedBy); // 삭제자
             } else {
-                domaDto.setUpdatedAt(updatedAt); // 更新日
-                domaDto.setUpdatedBy(updatedBy); // 更新者
+                domaDto.setUpdatedAt(updatedAt); // 갱신일
+                domaDto.setUpdatedBy(updatedBy); // 갱신자
             }
         }
     }
@@ -74,13 +74,13 @@ public class DefaultEntityListener<ENTITY> implements EntityListener<ENTITY> {
             val name = domaDto.getClass().getName();
             val ids = getIds(domaDto);
 
-            // 物理削除した場合はログ出力する
-            log.info("データを物理削除しました。entity={}, id={}, deletedBy={}, deletedAt={}", name, ids, deletedBy, deletedAt);
+            // 물리 삭제한 경우는 로그 출력한다.
+            log.info("데이터를 물리 삭제하였습니다. entity={}, id={}, deletedBy={}, deletedAt={}", name, ids, deletedBy, deletedAt);
         }
     }
 
     /**
-     * Idアノテーションが付与されたフィールドの値のリストを返します。
+     * Id 어노테이션이 부여된 필드의 리스트 값을 반환한다.
      *
      * @param dto
      * @return

@@ -20,7 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import static com.sample.common.util.ValidateUtils.isNotEmpty;
 
 /**
- * メール送信ヘルパー
+ * 메일 송신 헬퍼
  */
 @Component
 @Slf4j
@@ -30,7 +30,7 @@ public class SendMailHelper {
     JavaMailSender javaMailSender;
 
     /**
-     * メールを送信します。
+     * 메일을 송신한다.
      * 
      * @param fromAddress
      * @param toAddress
@@ -53,7 +53,7 @@ public class SendMailHelper {
     }
 
     /**
-     * 指定したテンプレートのメール本文を返します。
+     * 지정한 템플릿의 메일 본문을 반환한다.
      *
      * @param template
      * @param objects
@@ -74,7 +74,7 @@ public class SendMailHelper {
     protected ITemplateResolver templateResolver() {
         val resolver = new StringTemplateResolver();
         resolver.setTemplateMode("TEXT");
-        resolver.setCacheable(false); // 安全をとってキャッシュしない
+        resolver.setCacheable(false); // 안전을 위해 캐시하지 않는다.
         return resolver;
     }
 }

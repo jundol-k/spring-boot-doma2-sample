@@ -197,13 +197,14 @@ public class UserHtmlController extends AbstractHtmlController {
     @GetMapping("/edit/{userId}")
     public String editUser(@PathVariable Long userId, @ModelAttribute("userForm") UserForm form, Model model) {
 
-        // 입력체크 오륲가 있는 경우는, 원래의 화면으로 돌아간다
+        // 세션에서 취득할 수 있는 경우 다시 읽어 들이지 않는다.
         if (!hasErrors(model)) {
             // 1건 취득한다
-            val user = userService.findById(userId);
+            val user = userService.findById(userId); // 개정 번호를 포함한 데이터 취득
 
             // 취득한 Dto를 Form에 채워넣는다
             modelMapper.map(user, form);
+            // @ModelAttribute 애너테이션에 부여된 Form 객체는 자동으로 model에 설정된다.
         }
 
         return "modules/users/users/new";

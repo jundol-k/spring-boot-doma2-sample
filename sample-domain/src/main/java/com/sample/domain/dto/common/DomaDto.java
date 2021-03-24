@@ -2,7 +2,7 @@ package com.sample.domain.dto.common;
 
 import java.time.LocalDateTime;
 
-// TODO: コメントを書く
+// TODO: 주석을 적는다.
 public interface DomaDto extends Dto {
 
     String getCreatedBy();

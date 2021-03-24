@@ -9,13 +9,13 @@ import java.util.stream.Stream;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * リフレクション関連ユーティリティ
+ * 리플렉션 관련 유틸리티
  */
 @Slf4j
 public class ReflectionUtils {
 
     /**
-     * 指定したアノテーションが付与されているフィールドを返します。
+     * 지정한 어노테이션이 부여되어 있는 필드를 반환한다.
      *
      * @param clazz
      * @param annotationType
@@ -28,7 +28,7 @@ public class ReflectionUtils {
     }
 
     /**
-     * 指定したフィールドの値を返します。
+     * 지정한 필드 값을 반환한다.
      *
      * @param f
      * @param obj

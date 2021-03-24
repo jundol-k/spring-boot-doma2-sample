@@ -15,46 +15,46 @@ import lombok.Getter;
 import lombok.Setter;
 
 @SuppressWarnings("serial")
-@Entity(listener = DefaultEntityListener.class) // 自動的にシステム制御項目を更新するためにリスナーを指定する
+@Entity(listener = DefaultEntityListener.class) // 자동으로 시스템 제어 항목을 갱신하기 위해 리스너를 지정한다.
 @Setter
 @Getter
 public abstract class DomaDtoImpl implements DomaDto, Serializable {
 
-    // 作成者
+    // 작성자
     @JsonIgnore
     String createdBy;
 
-    // 作成日時
+    // 작성일시
     @JsonIgnore
     LocalDateTime createdAt;
 
-    // 更新者
+    // 갱신자
     @JsonIgnore
     String updatedBy;
 
-    // 更新日時
+    // 갱신 일시
     @JsonIgnore
     LocalDateTime updatedAt;
 
-    // 削除者
+    // 삭제자
     @JsonIgnore
     String deletedBy;
 
-    // 削除日時
+    // 삭제일시
     @JsonIgnore
     LocalDateTime deletedAt;
 
-    // 楽観的排他制御で使用する改定番号
+    // 낙관적 동시 제어 (Optimistic Concurrency control)에서 사용할 개정 번호
     @Version
     @Column(name = "version")
     Integer version;
 
-    // 作成・更新者に使用する値
+    // 작성, 갱신자로 사용할 값
     @Transient
     @JsonIgnore
     String auditUser;
 
-    // 作成・更新日に使用する値
+    // 작성, 갱신일으로 사용할 값
     @Transient
     @JsonIgnore
     LocalDateTime auditDateTime;

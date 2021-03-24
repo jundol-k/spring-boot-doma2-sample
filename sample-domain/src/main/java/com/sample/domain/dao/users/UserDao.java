@@ -16,7 +16,7 @@ import com.sample.domain.dto.user.UserCriteria;
 public interface UserDao {
 
     /**
-     * ユーザーを取得します。
+     * 사용자를 취득한다.
      *
      * @param criteria
      * @param options
@@ -26,7 +26,7 @@ public interface UserDao {
     <R> R selectAll(final UserCriteria criteria, final SelectOptions options, final Collector<User, ?, R> collector);
 
     /**
-     * ユーザーを1件取得します。
+     * 사용자 단건 취득
      *
      * @param id
      * @return
@@ -35,7 +35,7 @@ public interface UserDao {
     Optional<User> selectById(Long id);
 
     /**
-     * ユーザーを1件取得します。
+     * 사용자 단건 취득
      *
      * @param criteria
      * @return
@@ -44,7 +44,7 @@ public interface UserDao {
     Optional<User> select(UserCriteria criteria);
 
     /**
-     * ユーザーを登録します。
+     * 사용자 등록
      *
      * @param user
      * @return
@@ -53,7 +53,7 @@ public interface UserDao {
     int insert(User user);
 
     /**
-     * ユーザーを更新します。
+     * 사용자 갱신
      *
      * @param user
      * @return
@@ -62,16 +62,16 @@ public interface UserDao {
     int update(User user);
 
     /**
-     * ユーザーを論理削除します。
+     * 사용자 논리 삭제
      *
      * @param user
      * @return
      */
-    @Update(excludeNull = true) // NULLの項目は更新対象にしない
+    @Update(excludeNull = true) // null 항목은 갱신대상으로 하지 않는다.
     int delete(User user);
 
     /**
-     * ユーザーを一括登録します。
+     * 사용자를 일괄 등록
      *
      * @param users
      * @return
@@ -80,7 +80,7 @@ public interface UserDao {
     int[] insert(List<User> users);
 
     /**
-     * ユーザーを一括更新します。
+     * 사용자를 일괄 갱신
      *
      * @param users
      * @return
