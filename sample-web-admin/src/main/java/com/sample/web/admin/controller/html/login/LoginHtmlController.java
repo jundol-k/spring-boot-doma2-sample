@@ -16,7 +16,7 @@ import com.sample.web.base.controller.html.AbstractHtmlController;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 管理側ログイン
+ * 관리측 로그인
  */
 @Controller
 @Slf4j
@@ -28,7 +28,7 @@ public class LoginHtmlController extends AbstractHtmlController {
     }
 
     /**
-     * 初期表示
+     * 초기표시
      *
      * @param form
      * @param model
@@ -40,7 +40,7 @@ public class LoginHtmlController extends AbstractHtmlController {
     }
 
     /**
-     * 入力チェック
+     * 입력 체크
      * 
      * @param form
      * @param br
@@ -48,16 +48,18 @@ public class LoginHtmlController extends AbstractHtmlController {
      */
     @PostMapping(LOGIN_URL)
     public String index(@Validated @ModelAttribute LoginForm form, BindingResult br) {
-        // 入力チェックエラーがある場合は、元の画面にもどる
+        // 입력 체크 오류가 있는 경우에는 원래의 화면으로 돌아간다.
         if (br.hasErrors()) {
             return "modules/login/login";
         }
 
+        // 입력 체크를 통과한 경우는 Spring Security의 인증 처리로 포워드 한다
+        // POST 메소드여야하므로 forward를 사용할 필요가 있다
         return "forward:" + LOGIN_PROCESSING_URL;
     }
 
     /**
-     * ログイン成功
+     * 로그인 성공
      *
      * @param form
      * @param attributes
@@ -65,12 +67,13 @@ public class LoginHtmlController extends AbstractHtmlController {
      */
     @PostMapping(LOGIN_SUCCESS_URL)
     public String loginSuccess(@ModelAttribute LoginForm form, RedirectAttributes attributes) {
+        // Spring Security에 의한 인증 처리가 성공하면 설정한 URL으로 포워드하므로 POST 메소드로 처리하도록 한다.
         attributes.addFlashAttribute(GLOBAL_MESSAGE, getMessage("login.success"));
         return "redirect:/";
     }
 
     /**
-     * ログイン失敗
+     * 로그인 실패
      *
      * @param form
      * @param model
@@ -83,7 +86,7 @@ public class LoginHtmlController extends AbstractHtmlController {
     }
 
     /**
-     * タイムアウトした時
+     * 타임아웃 되었을 때
      * 
      * @param form
      * @param model
@@ -96,19 +99,20 @@ public class LoginHtmlController extends AbstractHtmlController {
     }
 
     /**
-     * ログアウト
+     * 로그아웃
      *
      * @return
      */
     @GetMapping(LOGOUT_SUCCESS_URL)
     public String logout(@ModelAttribute LoginForm form, RedirectAttributes attributes) {
+        // 로그아웃 처리가 성공하면 이 메서드에서 처리한다.
         attributes.addFlashAttribute(GLOBAL_MESSAGE, getMessage("logout.success"));
         return "redirect:/login";
     }
 
     @Override
     public boolean authorityRequired() {
-        // 権限チェックを求めない
+        // 권한체크를 요구하지 않는다.
         return false;
     }
 }

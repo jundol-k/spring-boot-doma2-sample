@@ -5,7 +5,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 import com.sample.web.base.security.BaseSecurityConfig;
 
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // アノテーションで役割、権限チェックを行うために定義する
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // 어노테이션으로 역할, 권한 체크를 실시하기 위해 정의한다
 @Configuration
 public class SecurityConfig extends BaseSecurityConfig {
 

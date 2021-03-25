@@ -28,7 +28,7 @@ import com.sample.web.base.util.RequestUtils;
 import lombok.val;
 
 /**
- * 基底セキュリティコンフィグ
+ * 기저 보안 설정
  */
 public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -85,66 +85,65 @@ public abstract class BaseSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        // 静的ファイルへのアクセスは認証をかけない
-        web.ignoring()//
-                .antMatchers(WEBJARS_URL, STATIC_RESOURCES_URL);
+        // 정적 파일로의 액세스는 인증을 걸지 않는다.
+        web.ignoring().antMatchers(WEBJARS_URL, STATIC_RESOURCES_URL);
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)//
+        auth.userDetailsService(userDetailsService)// UserDetailService 인터페이스를 구현한 독자적인 인증 문자열(realm)을 사용한다.
                 .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        // CookieにCSRFトークンを保存する
-        http.csrf()//
-                .csrfTokenRepository(new CookieCsrfTokenRepository());
+        // Cookie에 CSRF토큰을 보관한다
+        http.csrf().csrfTokenRepository(new CookieCsrfTokenRepository());
 
         String[] permittedUrls = { LOGIN_TIMEOUT_URL, FORBIDDEN_URL, ERROR_URL, RESET_PASSWORD_URL,
                 CHANGE_PASSWORD_URL };
 
         http.authorizeRequests()
-                // エラー画面は認証をかけない
-                .antMatchers(permittedUrls).permitAll()
-                // エラー画面以外は、認証をかける
+                // 오류 화면은 인증을 걸지 않는다
+                .antMatchers(permittedUrls).permitAll() // 인증을 걸지 않는 엔드포인트를 명확히 지정하고 그 외에는 인증을 건다.
+                // 오류 화면 이외는 인증을 건다
                 .anyRequest().authenticated()//
                 .and()//
-                .exceptionHandling()//
-                .authenticationEntryPoint(authenticationEntryPoint())//
-                .accessDeniedHandler(accessDeniedHandler());
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint())
+                .accessDeniedHandler(accessDeniedHandler()); // 세션 시간이 초과했을 때 메시지를 표시하는 AuthenticationEntryPoint를 직접 구현하고 사용하도록 설정한다.
 
-        http.formLogin()
-                // ログイン画面のURL
+        http.formLogin() // 웹 폼 인증의 파라미터명이나 화면 전환할 곳의 URL을 설정한다.
+                // 로그인 화면의 URL
                 .loginPage(LOGIN_URL)
-                // 認可を処理するURL
+                // 인가를 처리하는 URL
                 .loginProcessingUrl(LOGIN_PROCESSING_URL)
-                // ログイン成功時の遷移先
+                // 로그인 성공시의 리다이렉트
                 .successForwardUrl(LOGIN_SUCCESS_URL)
-                // ログイン失敗時の遷移先
+                // 로그인 실패시
                 .failureUrl(LOGIN_FAILURE_URL)
-                // ログインIDのパラメータ名
+                // 로그인 ID의 파라미터명
                 .usernameParameter("loginId")
-                // パスワードのパラメータ名
+                // 패스워드의 파라미터명
                 .passwordParameter("password").permitAll();
 
-        // ログアウト設定
+        // 로그 아웃 설정
         http.logout()//
                 .logoutRequestMatcher(new AntPathRequestMatcher(LOGOUT_URL))
-                // Cookieを破棄する
+                // 쿠키 파기
                 .deleteCookies("SESSION", "JSESSIONID", rememberMeCookieName)
-                // ログアウト画面のURL
+                // 로그아웃 화면의 URL
                 .logoutUrl(LOGOUT_URL)
-                // ログアウト後の遷移先
+                // 로그아웃 후의 URL
                 .logoutSuccessUrl(LOGOUT_SUCCESS_URL)
-                // ajaxの場合は、HTTPステータスを返す
+                // ajax인 경우, HTTP 스테이터스를 반환한다.
                 .defaultLogoutSuccessHandlerFor(new HttpStatusReturningLogoutSuccessHandler(),
                         RequestUtils::isAjaxRequest)
-                // セッションを破棄する
+                // 세션 파기
                 .invalidateHttpSession(true).permitAll();
 
         // RememberMe
+        // 자동 로그인을 위해 설정한다.
         http.rememberMe().key(REMEMBER_ME_KEY)//
                 .rememberMeServices(multiDeviceRememberMeServices());
     }

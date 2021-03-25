@@ -249,7 +249,7 @@ public class UserHtmlController extends AbstractHtmlController {
         // 갱신한다
         val updatedUser = userService.update(user);
 
-        // 세션 userForm을 클리어한다.
+        // 세션 userForm을 클리어한다.e
         sessionStatus.setComplete();
 
         return "redirect:/users/users/show/" + updatedUser.getId();

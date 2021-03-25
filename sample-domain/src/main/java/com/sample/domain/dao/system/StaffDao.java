@@ -16,7 +16,7 @@ import com.sample.domain.dto.system.StaffCriteria;
 public interface StaffDao {
 
     /**
-     * 担当者を取得します。
+     * 담당자를 조회한다.
      *
      * @param criteria
      * @param options
@@ -26,7 +26,7 @@ public interface StaffDao {
     <R> R selectAll(final StaffCriteria criteria, final SelectOptions options, final Collector<Staff, ?, R> collector);
 
     /**
-     * 担当者を1件取得します。
+     * 담당자를 1건 조회한다.
      *
      * @param id
      * @return
@@ -35,7 +35,7 @@ public interface StaffDao {
     Optional<Staff> selectById(Long id);
 
     /**
-     * 担当者を1件取得します。
+     * 담당자를 1건 조회한다.
      *
      * @param criteria
      * @return
@@ -44,7 +44,7 @@ public interface StaffDao {
     Optional<Staff> select(StaffCriteria criteria);
 
     /**
-     * 担当者を登録します。
+     * 담당자를 등록한다.
      *
      * @param Staff
      * @return
@@ -53,7 +53,7 @@ public interface StaffDao {
     int insert(Staff Staff);
 
     /**
-     * 担当者を更新します。
+     * 담당자를 갱신한다.
      *
      * @param staff
      * @return
@@ -62,16 +62,16 @@ public interface StaffDao {
     int update(Staff staff);
 
     /**
-     * 担当者を論理削除します。
+     * 담당자를 삭제한다.
      *
      * @param staff
      * @return
      */
-    @Update(excludeNull = true) // NULLの項目は更新対象にしない
+    @Update(excludeNull = true) // NULL 항목은 갱신대상으로 하지 않는다.
     int delete(Staff staff);
 
     /**
-     * 担当者を一括登録します。
+     * 담당자를 일괄 등록한다.
      *
      * @param staffs
      * @return

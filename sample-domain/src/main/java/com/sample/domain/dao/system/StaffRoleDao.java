@@ -18,7 +18,7 @@ import com.sample.domain.dto.system.StaffRole;
 public interface StaffRoleDao {
 
     /**
-     * 担当者権限を取得します。
+     * 담당자 권한 조회
      *
      * @param staffCriteria
      * @param permissionCriteria
@@ -30,7 +30,7 @@ public interface StaffRoleDao {
             final SelectOptions options, final Collector<StaffRole, ?, R> collector);
 
     /**
-     * 担当者権限を取得します。
+     * 스태프 아이디를 이용해 담당자 권한 조회
      * 
      * @param id
      * @param collector
@@ -41,7 +41,7 @@ public interface StaffRoleDao {
     <R> R selectByStaffId(Long id, final Collector<StaffRole, ?, R> collector);
 
     /**
-     * 担当者権限を1件取得します。
+     * 담당자 고유번호를 이용해 담당자 조회.
      *
      * @param id
      * @return
@@ -50,7 +50,7 @@ public interface StaffRoleDao {
     Optional<Permission> selectById(Long id);
 
     /**
-     * 担当者権限を1件取得します。
+     * 담당자 단 건 조회
      *
      * @param criteria
      * @return
@@ -59,7 +59,7 @@ public interface StaffRoleDao {
     Optional<Permission> select(PermissionCriteria criteria);
 
     /**
-     * 担当者権限を登録します。
+     * 담당자 등록.
      *
      * @param staffRole
      * @return
@@ -68,7 +68,7 @@ public interface StaffRoleDao {
     int insert(StaffRole staffRole);
 
     /**
-     * 担当者権限を更新します。
+     * 담당자 갱신
      *
      * @param staffRole
      * @return
@@ -77,16 +77,16 @@ public interface StaffRoleDao {
     int update(StaffRole staffRole);
 
     /**
-     * 担当者権限を論理削除します。
+     * 담당자 삭제
      *
      * @param staffRole
      * @return
      */
-    @Update(excludeNull = true) // NULLの項目は更新対象にしない
+    @Update(excludeNull = true) // NULL 항목은 갱신대상으로 하지 않는다.
     int delete(StaffRole staffRole);
 
     /**
-     * 担当者権限を一括登録します。
+     * 담당자 일괄 등록
      *
      * @param staffRoles
      * @return

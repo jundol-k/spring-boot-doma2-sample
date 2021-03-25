@@ -20,7 +20,7 @@ public class Staff extends DomaDtoImpl {
 
     private static final long serialVersionUID = -3762941082070995608L;
 
-    @OriginalStates // 差分UPDATEのために定義する
+    @OriginalStates // 다음 업데이트를 위해 정의한다.
     Staff originalStates;
 
     @Id
@@ -30,23 +30,23 @@ public class Staff extends DomaDtoImpl {
 
     String password;
 
-    // 名前
+    // 이름
     String firstName;
 
-    // 苗字
+    // 성
     String lastName;
 
-    // メールアドレス
+    // 메일주소
     @Email
     String email;
 
-    // 電話番号
+    // 전화번호
     @Digits(fraction = 0, integer = 10)
     String tel;
 
-    // パスワードリセットトークン
+    // 패스워드리셋토큰
     String passwordResetToken;
 
-    // トークン失効日
+    // 토큰 만료일
     LocalDateTime tokenExpiresAt;
 }

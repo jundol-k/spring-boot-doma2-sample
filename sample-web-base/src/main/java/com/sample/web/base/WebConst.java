@@ -1,7 +1,7 @@
 package com.sample.web.base;
 
 /**
- * 定数定義
+ * 상수 정의
  */
 public interface WebConst {
 
